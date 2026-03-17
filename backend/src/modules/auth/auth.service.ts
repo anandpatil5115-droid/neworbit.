@@ -42,7 +42,7 @@ export const registerUser = async (email: string, password: string, name: string
   await supabase.from('refresh_tokens').insert({
     user_id: user.id,
     token_hash: hashedRefreshToken,
-    expires_at: expiresAt
+    expires_at: expiresAt.toISOString()
   });
 
   return { accessToken, refreshToken, user };
