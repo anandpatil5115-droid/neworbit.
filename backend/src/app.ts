@@ -13,8 +13,13 @@ dotenv.config();
 
 const app = express();
 
+app.use((req: any, res: any, next: any) => {
+  console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
+  next();
+});
+
 app.use(cors({
-  origin: process.env.CLIENT_URL || 'http://localhost:5173',
+  origin: true, // Allow all origins for debugging
   credentials: true,
 }));
 

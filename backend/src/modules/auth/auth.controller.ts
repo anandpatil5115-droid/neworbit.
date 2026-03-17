@@ -6,10 +6,12 @@ const isProduction = process.env.NODE_ENV === 'production';
 export const register = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { email, password, name } = req.body;
+    console.log(`Registration attempt for: ${email}`);
     if (!email || !password || !name) {
       return res.status(400).json({ error: 'Email, password, and name are required' });
     }
     const { accessToken, refreshToken, user } = await AuthService.registerUser(email, password, name);
+    console.log(`Registration successful for: ${email}`);
 
     res.cookie('refresh_token', refreshToken, {
       httpOnly: true,
