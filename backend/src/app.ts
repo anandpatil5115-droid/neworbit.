@@ -13,15 +13,20 @@ dotenv.config();
 
 const app = express();
 
-app.use((req: any, res: any, next: any) => {
-  console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
-  next();
-});
-
+// 1. CORS MUST be first to handle preflight OPTIONS
 app.use(cors({
   origin: true, // Allow all origins for debugging
   credentials: true,
 }));
+
+// 2. Explicitly handle all OPTIONS preflights
+app.options('*', cors());
+
+// 3. Logger after CORS
+app.use((req: any, res: any, next: any) => {
+  console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
+  next();
+});
 
 app.use(express.json());
 app.use(cookieParser());
