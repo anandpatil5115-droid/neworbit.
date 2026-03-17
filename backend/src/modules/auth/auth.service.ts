@@ -74,7 +74,7 @@ export const loginUser = async (email: string, password: string) => {
   await supabase.from('refresh_tokens').insert({
     user_id: user.id,
     token_hash: hashedRefreshToken,
-    expires_at: expiresAt
+    expires_at: expiresAt.toISOString()
   });
 
   return { accessToken, refreshToken, user };
@@ -129,7 +129,7 @@ export const refreshUserToken = async (oldRefreshToken: string) => {
   await supabase.from('refresh_tokens').insert({
     user_id: userId,
     token_hash: hashedRefreshToken,
-    expires_at: expiresAt
+    expires_at: expiresAt.toISOString()
   });
 
   return { accessToken, newRefreshToken };
