@@ -32,11 +32,13 @@ export const register = async (req: Request, res: Response, next: NextFunction) 
 export const login = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { email, password } = req.body;
+    console.log(`Login attempt for: ${email}`);
     if (!email || !password) {
       return res.status(400).json({ error: 'Email and password are required' });
     }
 
     const { accessToken, refreshToken, user } = await AuthService.loginUser(email, password);
+    console.log(`Login successful for: ${email}`);
 
     res.cookie('refresh_token', refreshToken, {
       httpOnly: true,
