@@ -4,11 +4,15 @@ import { generateAccessToken, generateRefreshToken, verifyRefreshToken } from '.
 
 export const registerUser = async (email: string, password: string, name: string) => {
   // Check if user exists
-  const { data: existingUser } = await supabase
+  const { data: existingUser, error: fetchError } = await supabase
     .from('users')
     .select('id')
     .eq('email', email)
     .single();
+
+  if (fetchError && fetchError.code !== 'PGRST116') {
+    throw new Error(`Database error: ${fetchError.message}`);
+  }
 
   if (existingUser) {
     throw new Error('User already registered');
