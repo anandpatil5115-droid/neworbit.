@@ -1,15 +1,7 @@
 {
   "name": "new-orbit",
   "private": true,
-  "workspaces": [
-    "frontend",
-    "backend"
-  ],
   "scripts": {
-    "build": "npm run build --workspace=frontend",
-    "install": "npm install"
-  },
-  "devDependencies": {
-    "next": "16.1.6"
+    "build": "cd frontend && npm install && npm run build"
   }
 }
