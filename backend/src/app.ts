@@ -20,7 +20,7 @@ app.use(cors({
 }));
 
 // 2. Explicitly handle all OPTIONS preflights
-app.options('*', cors());
+app.options('(.*)', cors());
 
 // 3. Logger after CORS
 app.use((req: any, res: any, next: any) => {
