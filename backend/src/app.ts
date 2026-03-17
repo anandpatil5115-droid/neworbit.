@@ -13,16 +13,13 @@ dotenv.config();
 
 const app = express();
 
-// 1. CORS MUST be first to handle preflight OPTIONS
+// 1. Handle CORS for ALL requests (including preflight)
 app.use(cors({
-  origin: true, // Allow all origins for debugging
+  origin: true, 
   credentials: true,
 }));
 
-// 2. Explicitly handle all OPTIONS preflights
-app.options(/.*/, cors());
-
-// 3. Logger after CORS
+// 2. Logger
 app.use((req: any, res: any, next: any) => {
   console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
   next();
